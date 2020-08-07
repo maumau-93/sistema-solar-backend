@@ -7,5 +7,5 @@ export default async ({
   expressApp: Application;
 }): Promise<void> => {
   await expressLoader({ app: expressApp });
-  console.group('express loaded');
+  console.log('express loaded');
 };

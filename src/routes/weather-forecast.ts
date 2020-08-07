@@ -2,7 +2,8 @@ import { Router } from 'express';
 
 const route = Router();
 
-const weatherRoutes: () => void = () => {
+const weatherRoutes: (app: Router) => void = (app: Router) => {
+  app.use('', route);
   route.get('/weather/:day');
 };
 
