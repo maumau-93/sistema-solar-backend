@@ -9,7 +9,7 @@
     "lint-fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
-    "start": "npm run build && node build/index.js",
+    "start": "npm run build && NODE_ENV=production node build/index.js",
     "start:dev": "nodemon",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watchAll",
