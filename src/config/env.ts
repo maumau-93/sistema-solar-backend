@@ -11,6 +11,27 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 require('custom-env').env(true);
 
 export default {
-  port: process.env.PORT,
-  databaseUrl: process.env.DB_CONN
+  /**
+   * Agenda.js stuff
+   */
+  agenda: {
+    dbCollection: process.env.AGENDA_DB_COLLECTION,
+    pooltime: process.env.AGENDA_POOL_TIME,
+    concurrency: parseInt(process.env.AGENDA_CONCURRENCY || '1', 10)
+  },
+  /**
+   * Agendash config
+   */
+  agendash: {
+    user: 'agendash',
+    password: '123456'
+  },
+  // Connection string for database
+  databaseUrl: process.env.DB_CONN || '',
+  // Winston logger config
+  logs: {
+    level: process.env.LOG_LEVEL || 'silly'
+  },
+  // Server port
+  port: process.env.PORT
 };
