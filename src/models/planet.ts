@@ -10,7 +10,10 @@ interface PlanetModel extends IPlanet, mongoose.Document {}
 const Planet = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    minlength: 2,
+    maxlength: 30
   },
   distanceToSun: {
     type: Number,
@@ -22,8 +25,11 @@ const Planet = new mongoose.Schema({
   },
   planetDirection: {
     type: Number,
-    required: true
+    required: true,
+    enum: [1, -1]
   }
 });
 
-export default mongoose.model<PlanetModel>('Planet', Planet);
+const planetSchema = mongoose.model<PlanetModel>('Planet', Planet);
+
+export { planetSchema, PlanetModel };
