@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create Planet Should save successfully a new Planet 1`] = `
+Object {
+  "_id": "507f191e810c19729de860ea",
+  "angularSpeed": 2,
+  "distanceToSun": 3784,
+  "name": "Planet 1",
+  "planetDirection": 1,
+}
+`;

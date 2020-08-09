@@ -28,7 +28,7 @@ export default ({ app }: { app: express.Application }): void => {
     res.header(
       'Access-Control-Allow-Headers',
       'Authorization, X-API-KEY, Origin, X-Requested-With,' +
-      'Content-Type, Accept, Access-Control-Allow-Request-Method'
+        'Content-Type, Accept, Access-Control-Allow-Request-Method'
     );
     res.header(
       'Access-Control-Allow-Methods',
