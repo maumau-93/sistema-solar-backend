@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import weatherForecast from './weather-forecast';
+import weatherForecast from './weather-prediction';
 import AWS from './amazon-web-services';
+import planet from './planet';
 
 /**
  * Routes wrapper.
@@ -12,6 +13,7 @@ export default (): Router => {
   const app = Router();
   weatherForecast(app);
   AWS(app);
+  planet(app);
 
   return app;
 };
