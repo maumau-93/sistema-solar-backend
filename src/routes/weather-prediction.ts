@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import daySchemaValidator from '../validators/weather-forecast';
+import daySchemaValidator from '../validators/weather-prediction';
 import {
   getQuantityOfDroughtPeriods,
   getWeatherForecastByDayNumber,
   getQuantityOfRainyPeriods,
   getQuantityOfGoodConditionPeriods
-} from '../api/weather-forecast';
+} from '../api/weather-prediction';
 
 const route = Router();
 
