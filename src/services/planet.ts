@@ -14,9 +14,7 @@ import {
  */
 const createNewPlanet = async (planetToCreate: IPlanet): Promise<IPlanet> => {
   try {
-    Logger.info(PLANET_CREATION_MESSAGES.STARTING_CREATION);
     const planetCreated = await planetSchema.create(planetToCreate);
-    Logger.info(PLANET_CREATION_MESSAGES.CREATION_FINISHED);
     return planetCreated;
   } catch (e) {
     Logger.info(PLANET_CREATION_MESSAGES.ERROR_CREATING);
@@ -32,11 +30,9 @@ const createNewPlanet = async (planetToCreate: IPlanet): Promise<IPlanet> => {
  */
 const getInitialPlanets = async (planetNames: string[]): Promise<IPlanet[]> => {
   try {
-    Logger.info(GET_PLANETS_MESSAGES.GET_STARTED);
     const initialPlanets = await planetSchema.find({
       name: { $in: planetNames }
     });
-    Logger.info(GET_PLANETS_MESSAGES.GET_FINISHED);
     return initialPlanets;
   } catch (e) {
     Logger.info(GET_PLANETS_MESSAGES.GET_ERROR_FAILURE);

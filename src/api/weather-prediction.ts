@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import GalaxyWeather from '../models/enums/galaxy-weather';
 import IWeatherPrediction from '../models/interfaces/I-weather-prediction';
-import Logger from '../config/loaders/logger';
 import { HTTP_CODES } from '../utils/global';
 
 import {
@@ -22,7 +21,6 @@ const getWeatherForecastByDayNumber: (
   res: Response
 ) => Promise<void> = async (req: Request, res: Response) => {
   try {
-    Logger.debug('Retreiving weather forecast for day: %o', req.params.day);
     const weatherPrediction: IWeatherPrediction = await getWeatherPrediction(
       parseInt(req.params.day)
     );
