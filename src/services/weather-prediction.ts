@@ -3,6 +3,8 @@ import events from '../events/events';
 import IPlanet from '../models/interfaces/I-planet';
 import IWeatherPrediction from '../models/interfaces/I-weather-prediction';
 import Logger from '../config/loaders/logger';
+import redisInstance from '../config/loaders/redis';
+import { promisify } from 'util';
 import { weatherPredictionSchema } from '../models/weather-prediction';
 import {
   GET_WEATHER_MESSAGES,
@@ -11,12 +13,16 @@ import {
   GET_MAX_PREC_HIST,
   GET_PERIOD_WEATHER_COUNT,
   UPDATE_MAX_PREC,
-  WEATHER_CREATION_MESSAGES
+  WEATHER_CREATION_MESSAGES,
+  REDIS_CHECKING,
+  WEATHER_CACHE_POSTFIX
 } from '../utils/global';
 import {
   calculateCoordinates,
   determineWeatherForDay
 } from '../utils/weather-prediction';
+
+const getAsync = promisify(redisInstance.get).bind(redisInstance);
 
 /**
  * Returns the count of periods for the specified weather
@@ -32,6 +38,27 @@ const getPeriodCountForWeather = async (weather: string): Promise<number> => {
 };
 
 /**
+ * Returns the weather prediction for a given day from the Redis cache
+ * whenever possible.
+ * @param day
+ */
+const getWeatherPredictionFromCache = async (day: number) => {
+  Logger.info(REDIS_CHECKING.START_CACHE_CHECK);
+  try {
+    const weatherPrediction = await getAsync(`${day}${WEATHER_CACHE_POSTFIX}`);
+    if (!weatherPrediction) {
+      Logger.info(REDIS_CHECKING.DAY_NOT_CACHED);
+      return null;
+    }
+    return JSON.parse(weatherPrediction) as IWeatherPrediction;
+  } catch (e) {
+    Logger.info(REDIS_CHECKING.ERROR_GETTING_FROM_REDIS);
+    Logger.info(e);
+    return null;
+  }
+};
+
+/**
  * Returns the weather prediction for the specified day
  * @param day
  * @returns {Promise<IWeatherPrediction>}
@@ -40,11 +67,13 @@ const getWeatherPrediction = async (
   day: number
 ): Promise<IWeatherPrediction> => {
   try {
-    Logger.info(GET_WEATHER_MESSAGES.GET_STARTED);
+    const cachedPrediction = await getWeatherPredictionFromCache(day);
+    if (cachedPrediction) return cachedPrediction;
     const weatherPrediction = await weatherPredictionSchema.findOne({ day });
     if (!weatherPrediction) {
       throw new Error(GET_WEATHER_MESSAGES.GET_ERROR_NOT_FOUND);
     }
+    env.eventEmitter.emit(events.weatherQuery.onQuery, day);
     return weatherPrediction;
   } catch (e) {
     Logger.info(GET_WEATHER_MESSAGES.GET_ERROR_FAILURE);
@@ -59,12 +88,10 @@ const getWeatherPrediction = async (
  */
 const getMostRecentProcessedDay = async (): Promise<IWeatherPrediction> => {
   try {
-    Logger.info(GET_DAY_MESSAGES.GET_STARTED);
     const mostRecentProcessedDay = await weatherPredictionSchema
       .find()
       .sort({ day: -1 })
       .limit(1);
-    Logger.info(GET_DAY_MESSAGES.GET_FINISHED);
     return mostRecentProcessedDay[0];
   } catch (e) {
     Logger.info(GET_DAY_MESSAGES.GET_ERROR_FAILURE);
@@ -85,7 +112,6 @@ const getMaximumPrecipitationPredictionInRangeOfDays = async (
   endDay: number
 ): Promise<IWeatherPrediction> => {
   try {
-    Logger.info(GET_MAX_PREC_RANGE.START);
     const maxPrecipitationDay = await weatherPredictionSchema
       .find({
         day: { $gte: startDay, $lte: endDay },
@@ -93,7 +119,6 @@ const getMaximumPrecipitationPredictionInRangeOfDays = async (
       })
       .sort({ precipitationPolygonPerimeter: -1 })
       .limit(1);
-    Logger.info(GET_MAX_PREC_RANGE.FINISH);
     return maxPrecipitationDay[0];
   } catch (e) {
     Logger.info(GET_MAX_PREC_RANGE.ERROR);
@@ -110,11 +135,9 @@ const getMaximumPrecipitationPredictionInHistory = async (): Promise<
   IWeatherPrediction
 > => {
   try {
-    Logger.info(GET_MAX_PREC_HIST.START);
     const maxPrecipitationDayInHistory = await weatherPredictionSchema.find({
       maxPrecipitation: true
     });
-    Logger.info(GET_MAX_PREC_HIST.FINISH);
     return maxPrecipitationDayInHistory[0];
   } catch (e) {
     Logger.info(GET_MAX_PREC_HIST.ERROR);
@@ -132,13 +155,11 @@ const setMaxPrecipitationFlag = async (
   day: number,
   value: boolean
 ): Promise<void> => {
-  Logger.info(UPDATE_MAX_PREC.START);
   try {
     await weatherPredictionSchema.findOneAndUpdate(
       { day },
       { $set: { maxPrecipitation: value } }
     );
-    Logger.info(UPDATE_MAX_PREC.FINISH);
   } catch (e) {
     Logger.info(UPDATE_MAX_PREC.ERROR);
     Logger.error(e);
