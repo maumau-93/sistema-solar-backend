@@ -31,7 +31,7 @@ consideraciones:
 sequía y condiciones óptimas de clima y presión, pues esto requerirá una alineación planetaria casi perfecta.
 Tolera únicamente una desviación de `0.05` unidades en la pendiente que determina si los planetas están
 alineados en ambos casos. 
-- El sistema calcula la predicción del clima en rangos de `20 días` cada `2 minutos` y lo hará de 
+- El sistema calcula la predicción del clima en rangos de `5 días` cada `2 minutos` y lo hará de 
 manera indefinida, más allá de los 10 años. (En un sistema real, esta parametrización sería distinta)
 - El sistema calculará los días más populares de consulta y los almacenará temporalmente en un 
 `database cache`. En este caso, una vez un día determinado haya sido consultado más de `10 veces` 
