@@ -185,5 +185,6 @@ $ NODE_ENV=production node build/app.js
 ```
 Como se puede observar en el código, no hay referencia a hacer clustering nativo de NodeJS ni hay uso explícito de worker threads. Esta fue una decisión de practicidad tomada para este proyecto. En el despliegue en AWS, se aplicó clustering utilizando PM2.
 
-
+### Arquitectura de la solución
+Esta era la arquitectura de solución planeada a implementar en AWS. Sin embargo, tuve problemas con la cuenta y al final todo quedó limitado a un servidor de aplicación, un servidor de DB Cache (Redis) y un servidor de base de datos MongoDB.
 
