@@ -194,3 +194,15 @@ Esta era la arquitectura de solución planeada a implementar en AWS. Sin embargo
 Se implementó una arquitectura clásica con Controlador, Capa de servicios, Capa de datos. Sin embargo, aparte de esto tenemos dos capas que son independientes del flujo Controlador --> Servicio --> Datos que son la capa de Eventos y la capa de Jobs (o tareas programadas). Adicional a esto, tenemos una capa que corresponde al DB Cache.
 
 ![Alt text](softwarearch.png?raw=true "Arquitectura de solucion")
+
+# Cobertura de pruebas
+El reporte completo se incluyó como parte del repositorio, y se encuentra en la carpeta `coverage`. Sin embargo, adjunto imagen que refleja la covertura de sentencias, branches, funciones y líneas en el proyecto
+
+![Alt text](testcoverage.png?raw=true "Cobertura de pruebas")
+
+## Mejoras a Implementar
+- Arquitectura de la solución completamente desplegada
+- CI/CD para tener despliegue continuo con pruebas automatizadas corriendo en cada build (Jenkins)
+- Pruebas de integración dentro del CI/CD con instancias y bases de datos reales que verifiquen el correcto funcionamiento real del API
+- Configurar el proyecto en docker para un setup mucho más simple en desarrollo.
+- La base de datos quedó completamente expuesta y sin setup de usuarios con permisos únicamente de lectura y escritura con autenticación (esto fue intencionado, para poder acceder a ella y verificar el correcto funcionamiento de la aplicación)
