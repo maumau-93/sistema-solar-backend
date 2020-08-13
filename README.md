@@ -147,7 +147,7 @@ Este proyecto fue construido utilizando las tecnologías listadas a continuació
 - MongoDB - Base de datos no relacional basada en documentos
 - Mongoose - ODM para MongoDB
 - JsonSchema - API validators
-- Custom Env - Inyección de variables de entorno de acuerdo al stage de despliegue de la aplicación
+- Custom Env - Inyección de variables de entorno de acuerdo al stage de despliegue de la aplicación. Tiene una subependencia con Security High Risk. Estoy al tanto de ello para hacer el update manual de dicha subdependencia.
 - Helmet - Configuración de seguridad del API (No mostrar tecnología del backend, no permitir sniffing. Etc.)
 - Winston - Todo para logging
 - Agenda - Todo para Scheduled Tasks / Jobs
