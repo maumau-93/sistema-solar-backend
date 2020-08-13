@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import daySchemaValidator from '../validators/weather-prediction';
+
 import {
-  getQuantityOfDroughtPeriods,
+  daySchemaValidator,
+  weatherConditionValidator
+} from '../validators/weather-prediction';
+import {
+  getQuantityOfClimaticPeriods,
   getWeatherForecastByDayNumber,
-  getQuantityOfRainyPeriods,
-  getQuantityOfGoodConditionPeriods
+  getDayOfMaxPrecipitation
 } from '../api/weather-prediction';
 
 const route = Router();
@@ -12,9 +15,12 @@ const route = Router();
 const weatherRoutes: (app: Router) => void = (app: Router) => {
   app.use('/weather', route);
   route.get('/:day', daySchemaValidator, getWeatherForecastByDayNumber);
-  route.get('/drought', getQuantityOfDroughtPeriods);
-  route.get('/rainy', getQuantityOfRainyPeriods);
-  route.get('/optimal', getQuantityOfGoodConditionPeriods);
+  route.get(
+    '/:condition?',
+    weatherConditionValidator,
+    getQuantityOfClimaticPeriods
+  );
+  route.get('/precipitation/max', getDayOfMaxPrecipitation);
 };
 
 export default weatherRoutes;

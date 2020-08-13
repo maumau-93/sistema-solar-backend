@@ -1,19 +1,24 @@
-import { planetSchema } from '../../models/planet';
+import IPlanet from '../../models/interfaces/I-planet';
 
-const planetWithValidData = new planetSchema({
-  _id: '507f191e810c19729de860ea',
-  name: 'Planet 1',
+const planetWithValidData: IPlanet = {
+  name: 'Planet1',
   distanceToSun: 3784,
   angularSpeed: 2,
   planetDirection: 1
-});
+};
 
-const planetWithInvalidName = new planetSchema({
-  _id: '507f191e810c19729de860eb',
+const planetWithValidData2: IPlanet = {
+  name: 'Planet2',
+  distanceToSun: 4584,
+  angularSpeed: 3,
+  planetDirection: -1
+};
+
+const planetWithInvalidName: IPlanet = {
   name: 'P',
   distanceToSun: 3784,
   angularSpeed: 2,
   planetDirection: 1
-});
+};
 
-export { planetWithValidData, planetWithInvalidName };
+export { planetWithValidData, planetWithValidData2, planetWithInvalidName };

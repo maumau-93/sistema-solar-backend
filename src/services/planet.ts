@@ -1,11 +1,18 @@
-import { planetSchema, PlanetModel } from '../models/planet';
 import IPlanet from '../models/interfaces/I-planet';
 import Logger from '../config/loaders/logger';
-import { PLANET_CREATION_MESSAGES } from '../utils/global';
+import { planetSchema } from '../models/planet';
 
-const createNewPlanet = async (
-  planetToCreate: IPlanet
-): Promise<PlanetModel> => {
+import {
+  PLANET_CREATION_MESSAGES,
+  GET_PLANETS_MESSAGES
+} from '../utils/global';
+
+/**
+ * Creates a new planet given a planet object and returns it
+ * @param planetToCreate
+ * @returns {Promise<IPlanet>}
+ */
+const createNewPlanet = async (planetToCreate: IPlanet): Promise<IPlanet> => {
   try {
     Logger.info(PLANET_CREATION_MESSAGES.STARTING_CREATION);
     const planetCreated = await planetSchema.create(planetToCreate);
@@ -18,4 +25,24 @@ const createNewPlanet = async (
   }
 };
 
-export default createNewPlanet;
+/**
+ * Returns a list of planets given a list of names
+ * @param planetNames
+ * @returns {Promise<IPlanet[]>}
+ */
+const getInitialPlanets = async (planetNames: string[]): Promise<IPlanet[]> => {
+  try {
+    Logger.info(GET_PLANETS_MESSAGES.GET_STARTED);
+    const initialPlanets = await planetSchema.find({
+      name: { $in: planetNames }
+    });
+    Logger.info(GET_PLANETS_MESSAGES.GET_FINISHED);
+    return initialPlanets;
+  } catch (e) {
+    Logger.info(GET_PLANETS_MESSAGES.GET_ERROR_FAILURE);
+    Logger.error(e);
+    throw e;
+  }
+};
+
+export { createNewPlanet, getInitialPlanets };

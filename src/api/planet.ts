@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import createNewPlanet from '../services/planet';
+import { createNewPlanet } from '../services/planet';
 import { HTTP_CODES, PLANET_CREATION_MESSAGES } from '../utils/global';
 import Logger from '../config/loaders/logger';
 

@@ -16,10 +16,24 @@ const WeatherPrediction = new mongoose.Schema({
   weather: {
     type: String,
     required: true
+  },
+  maxPrecipitation: {
+    type: Boolean,
+    required: false
+  },
+  precipitationPolygonPerimeter: {
+    type: Number,
+    required: false
+  },
+  startingPeriod: {
+    type: Boolean,
+    required: false
   }
 });
 
-export default mongoose.model<GalaxyWeatherModel>(
+const weatherPredictionSchema = mongoose.model<GalaxyWeatherModel>(
   'WeatherPrediction',
   WeatherPrediction
 );
+
+export { weatherPredictionSchema, GalaxyWeatherModel };
