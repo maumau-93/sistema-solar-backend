@@ -1,3 +1,5 @@
+import { EventEmitter } from 'events';
+
 // Set the NODE_ENV to 'development' by default
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -19,13 +21,13 @@ export default {
     pooltime: process.env.AGENDA_POOL_TIME,
     concurrency: parseInt(process.env.AGENDA_CONCURRENCY || '1', 10)
   },
-  /**
-   * Agendash config
-   */
-  agendash: {
-    user: 'agendash',
-    password: '123456'
-  },
+
+  // Days to check in weatherPredictionJobHandler
+  daysRange: process.env.DAYS_TO_CHECK || '20',
+
+  // Only one event emitter instance needed for this application
+  eventEmitter: new EventEmitter(),
+
   // Connection string for database
   databaseUrl: process.env.DB_CONN || '',
   // Winston logger config

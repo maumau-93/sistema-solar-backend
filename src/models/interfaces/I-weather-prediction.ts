@@ -1,8 +1,9 @@
-import GalaxyWeather from '../enums/galaxy-weather';
-
 interface IWeatherPrediction {
   day: number;
-  weather: GalaxyWeather;
+  weather: string;
+  maxPrecipiation?: boolean;
+  precipitationPolygonPerimeter?: number;
+  startingPeriod?: boolean;
 }
 
 export default IWeatherPrediction;

@@ -13,7 +13,8 @@ const Planet = new mongoose.Schema({
     required: true,
     unique: true,
     minlength: 2,
-    maxlength: 30
+    maxlength: 30,
+    index: true
   },
   distanceToSun: {
     type: Number,

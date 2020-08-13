@@ -3,10 +3,10 @@
  * for the given galaxy.
  */
 enum GalaxyWeather {
-  Drought = 'Drought',
-  Rainy = 'Rainy',
-  OptimalContitions = 'Optimal Pressure and Temperature',
-  Unkwnown = 'Unknown weather'
+  Drought = 'drought',
+  Rainy = 'rainy',
+  OptimalContitions = 'optimal',
+  Unkwnown = 'unknown'
 }
 
 export default GalaxyWeather;

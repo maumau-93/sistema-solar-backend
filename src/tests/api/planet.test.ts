@@ -1,4 +1,3 @@
-import mockingoose from 'mockingoose';
 import { planetWithValidData, planetWithInvalidName } from '../data/planet';
 import createPlanet from '../../api/planet';
 import { HTTP_CODES, PLANET_CREATION_MESSAGES } from '../../utils/global';
@@ -6,7 +5,6 @@ import { HTTP_CODES, PLANET_CREATION_MESSAGES } from '../../utils/global';
 let res: any;
 
 beforeEach(() => {
-  mockingoose.resetAll();
   res = {
     status: jest.fn(() => res),
     json: jest.fn()
@@ -15,7 +13,7 @@ beforeEach(() => {
 
 jest.mock('../../services/planet');
 
-describe('Create Planet', () => {
+describe('createPlanet', () => {
   it('Should save successfully a new Planet', async () => {
     const req: any = {
       body: {

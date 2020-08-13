@@ -1,7 +1,7 @@
-import { Validator } from 'jsonschema';
-import { Request, Response, NextFunction } from 'express';
-import { HTTP_CODES, PLANET_VALIDATION } from '../utils/global';
 import IPlanet from '../models/interfaces/I-planet';
+import { HTTP_CODES, PLANET_VALIDATION } from '../utils/global';
+import { Request, Response, NextFunction } from 'express';
+import { Validator } from 'jsonschema';
 
 const validator = new Validator();
 
@@ -37,10 +37,9 @@ const planetSchemaValidator = (
     req.body.planet = newPlanet;
     next();
   } else {
-    res.status(HTTP_CODES.BAD_REQUEST).send({
-      status: HTTP_CODES.BAD_REQUEST,
-      message: PLANET_VALIDATION.INVALID_PLANET_OBJECT
-    });
+    res
+      .status(HTTP_CODES.BAD_REQUEST)
+      .json(PLANET_VALIDATION.INVALID_PLANET_OBJECT);
   }
 };
 
