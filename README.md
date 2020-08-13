@@ -206,3 +206,4 @@ El reporte completo se incluyó como parte del repositorio, y se encuentra en la
 - Pruebas de integración dentro del CI/CD con instancias y bases de datos reales que verifiquen el correcto funcionamiento real del API
 - Configurar el proyecto en docker para un setup mucho más simple en desarrollo.
 - La base de datos quedó completamente expuesta y sin setup de usuarios con permisos únicamente de lectura y escritura con autenticación (esto fue intencionado, para poder acceder a ella y verificar el correcto funcionamiento de la aplicación)
+- Documentación interactiva del API por medio de Swagger.
