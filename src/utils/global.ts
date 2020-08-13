@@ -87,6 +87,23 @@ const UPDATE_MAX_PREC = {
   ERROR: 'Error uptading the max precipitation flag'
 };
 
+const REDIS_CHECKING = {
+  START_CHECK: 'Checking if day is on demand',
+  START_CACHE_CHECK: 'Checking if weather forecast is in the DB cache',
+  ERROR_GETTING_FROM_REDIS: 'Error while getting the specified day information',
+  NO_EXISTENT_RECORD:
+    'No existent records for this day, creating a new one ...',
+  UPDATING_RECORD: 'Updating record for todays querying',
+  ERROR_UPDATING: 'Error updating record in redis',
+  BECOME_POPULAR:
+    'The queries for this day are in high demand, caching to Redis...',
+  DAY_NOT_CACHED: 'No cached records for this day. Going through DB'
+};
+
+const DAY_IN_SECONDS = 86400;
+const HIGH_DEMAND_DAY_QUERY = 10;
+const WEATHER_CACHE_POSTFIX = '-weather-cache';
+
 /*
  * THIS IS ONLY MEANT TO BE DONE AS PART OF THIS EXERCISE
  * NORMALLY THIS IS NEVER DONE AS IN A REAL PROBLEM THERE
@@ -108,19 +125,23 @@ const MAX_PREC_DAY_EVENT = {
 };
 
 export {
+  DAY_IN_SECONDS,
   GET_WEATHER_MESSAGES,
   GET_DAY_MESSAGES,
   GET_PLANETS_MESSAGES,
   GET_MAX_PREC_RANGE,
   GET_MAX_PREC_HIST,
   GET_PERIOD_WEATHER_COUNT,
+  HIGH_DEMAND_DAY_QUERY,
   HTTP_CODES,
   MAX_PREC_DAY_EVENT,
   MIN_NUMBER_PLANETS,
   PLANET_CREATION_MESSAGES,
   PLANET_VALIDATION,
+  REDIS_CHECKING,
   STARTUP_MESSAGES,
   UPDATE_MAX_PREC,
+  WEATHER_CACHE_POSTFIX,
   WEATHER_CREATION_MESSAGES,
   WEATHER_FORECAST_VALIDATION,
   WEATHER_JOB_MESSAGES,

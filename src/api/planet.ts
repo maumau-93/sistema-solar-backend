@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { createNewPlanet } from '../services/planet';
 import { HTTP_CODES, PLANET_CREATION_MESSAGES } from '../utils/global';
-import Logger from '../config/loaders/logger';
 
 /**
  * Controller function that creates a new Planet for the galaxy.
@@ -16,7 +15,6 @@ const createPlanet: (req: Request, res: Response) => Promise<void> = async (
   res: Response
 ) => {
   try {
-    Logger.debug('Calling create planet endpoint with %o', req.body.planet);
     const planetCreated = await createNewPlanet(req.body.planet);
     res.status(HTTP_CODES.OK).json(planetCreated);
   } catch (e) {

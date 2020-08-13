@@ -22,6 +22,9 @@ export default {
     concurrency: parseInt(process.env.AGENDA_CONCURRENCY || '1', 10)
   },
 
+  // Redis configuration
+  redisUrl: process.env.REDIS_URL,
+
   // Days to check in weatherPredictionJobHandler
   daysRange: process.env.DAYS_TO_CHECK || '20',
 
